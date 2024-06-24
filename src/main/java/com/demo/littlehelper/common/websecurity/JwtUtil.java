@@ -2,15 +2,21 @@
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import com.demo.littlehelper.model.dto.userprofile.LoginUserInfo;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
  public class JwtUtil {
+    
+    private final JwtBlackListService jwtBlackListService;
+    
     // 給定一組密鑰，用來解密以及加密使用
     private static final String LITTLE_HELPER_KY = "HeyLittleHelperIsRunningSpringSecurityAndJWT";
     
@@ -24,5 +30,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
                  // MySecret是自訂的私鑰，HS512是自選的演算法，可以任意改變
                  .signWith(SignatureAlgorithm.HS512, LITTLE_HELPER_KY)
                  .compact();
+     }
+     
+     public boolean isTokenValid(String token) {
+         return !jwtBlackListService.isJwtInBlackList(token);
      }
 }

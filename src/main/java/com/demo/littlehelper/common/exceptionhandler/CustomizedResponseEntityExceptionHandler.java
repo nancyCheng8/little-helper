@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.demo.littlehelper.common.exceptionhandler.exceptions.DataNotFoundException;
 import com.demo.littlehelper.common.exceptionhandler.exceptions.InvalidParameterException;
 import com.demo.littlehelper.common.exceptionhandler.exceptions.ServiceException;
+import com.demo.littlehelper.common.exceptionhandler.exceptions.TokenExpireException;
 import com.demo.littlehelper.common.exceptionhandler.exceptions.UserNotFoundException;
 
 
@@ -56,6 +57,13 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(TokenExpireException.class)
+    public final ResponseEntity<Object> handleInvalidParameterException(TokenExpireException ex, WebRequest request) {
+        
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
     }
     
     @Override

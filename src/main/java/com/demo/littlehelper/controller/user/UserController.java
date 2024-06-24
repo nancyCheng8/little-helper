@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,7 @@ import jakarta.validation.Valid;
 @RequestMapping(path = "/user")
 public class UserController {
     @Autowired
-    private JwtUtil jwtGenerater;
+    private JwtUtil jwtUtil;
     @Autowired
     private UserUsecase userUsecase;
 
@@ -38,7 +39,7 @@ public class UserController {
         // 檢核、查詢會員資料 
         LoginUserInfo userProfile = userUsecase.verifyAndGetUserInfo(userInfo);
         // 建 jwtToken
-        String jwtToken = jwtGenerater.generateJwtToken(userProfile);
+        String jwtToken = jwtUtil.generateJwtToken(userProfile);
         
         UserLoginRs rs = this.toUserLoginRs(userProfile, jwtToken);
         return ResponseEntity.ok(rs);
@@ -50,6 +51,13 @@ public class UserController {
         UserProfile userInfo = this.userRegisterRqToUserProfile(registerRq);
         
         userUsecase.doRegister(userInfo);
+        return ResponseEntity.ok().build();
+    }
+    
+    //** 登出接口 */
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
+        userUsecase.logout(token);
         return ResponseEntity.ok().build();
     }
     

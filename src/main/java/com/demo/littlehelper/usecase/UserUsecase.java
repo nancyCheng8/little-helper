@@ -1,8 +1,10 @@
 package com.demo.littlehelper.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.demo.littlehelper.common.websecurity.JwtBlackListService;
 import com.demo.littlehelper.gateway.database.userprofile.UserProfileResource;
 import com.demo.littlehelper.model.dto.userprofile.LoginUserInfo;
 import com.demo.littlehelper.model.dto.userprofile.UserProfile;
@@ -11,6 +13,8 @@ import com.demo.littlehelper.model.dto.userprofile.UserProfile;
 public class UserUsecase {
      @Autowired
      private UserProfileResource userProfileResource;
+     @Autowired
+     private JwtBlackListService jwtBlackListService;
      
     /**
      * 檢核並回傳登入者資訊
@@ -42,5 +46,16 @@ public class UserUsecase {
      */
     public void doRegister(UserProfile userInfo) {
         userProfileResource.saveUserInfo(userInfo);
+    }
+    
+    /**
+     * 使用者登出
+     * @param token
+     */
+    public void logout(String token) {
+        // 調用JWT黑名單服務將該token加入到黑名單中      
+        jwtBlackListService.addJwtToBlackList(token.substring(7));
+        // 清除Spring Security上下文
+        SecurityContextHolder.clearContext();
     }
 }
