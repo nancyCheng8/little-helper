@@ -1,0 +1,7 @@
+spring:
+  data:
+    redis:
+      host: 127.0.0.1  #Redis伺服器位址 (預設 localhost)
+      port: 6379 #Redis伺服器埠號 (預設 6379)
+      database: 0  #Redis資料庫索引 (預設 0)
+      timeout: 4000 # 讀取超時
