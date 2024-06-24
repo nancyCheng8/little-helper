@@ -19,7 +19,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
          Date expireDate = new Date(System.currentTimeMillis() + 30 * 60 * 1000);
          return Jwts.builder()
                  //以account當subject
-                 .setSubject(user.getAccount())
+                 .setSubject(user.getUserAccount())
                  .setExpiration(expireDate)
                  // MySecret是自訂的私鑰，HS512是自選的演算法，可以任意改變
                  .signWith(SignatureAlgorithm.HS512, LITTLE_HELPER_KY)
