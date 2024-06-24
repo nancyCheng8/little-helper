@@ -1,4 +1,4 @@
-package com.demo.littlehelper.controller.user;
+package com.demo.littlehelper.controller.user.model;
 
 import com.demo.littlehelper.model.dto.userprofile.LoginUserInfo;
 

@@ -1,4 +1,4 @@
-package com.demo.littlehelper.controller.user;
+package com.demo.littlehelper.controller.user.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

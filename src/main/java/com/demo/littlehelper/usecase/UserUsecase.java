@@ -19,7 +19,6 @@ public class UserUsecase {
      * @return UserProfile
      */
     public LoginUserInfo verifyAndGetUserInfo(UserProfile userInfo) {
-        // 檢核登入次數
         // 檢核帳號密碼
 
         // 檢核通過
