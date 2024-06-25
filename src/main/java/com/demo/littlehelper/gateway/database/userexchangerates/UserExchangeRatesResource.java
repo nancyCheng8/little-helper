@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.demo.littlehelper.model.dto.userexchangerates.UserExchangeRates;
 
+import jakarta.transaction.Transactional;
+
 @Component
  public class UserExchangeRatesResource {
 
@@ -17,6 +19,7 @@ import com.demo.littlehelper.model.dto.userexchangerates.UserExchangeRates;
      * 儲存使用者選擇的匯率
      * @param rateToSave
      */
+    @Transactional
     public void saveUserExchangeRate(UserExchangeRates rateToSave) {
         UserExchangeRatesEntity entity = this.userExchangeRatesToEntity(rateToSave);
         userExchangeRatesRepository.save(entity);
@@ -38,6 +41,7 @@ import com.demo.littlehelper.model.dto.userexchangerates.UserExchangeRates;
      * 刪除紀錄使用者儲存的匯率資料
      * @param exchangeRateRecordIds
      */
+    @Transactional
     public void deleteUserExchangeRateRecord(List<Long> exchangeRateRecordIds) {
         userExchangeRatesRepository.deleteAllById(exchangeRateRecordIds);
     }

@@ -7,6 +7,8 @@ import com.demo.littlehelper.common.exceptionhandler.ErrorCode;
 import com.demo.littlehelper.common.exceptionhandler.exceptions.UserNotFoundException;
 import com.demo.littlehelper.model.dto.userprofile.UserProfile;
 
+import jakarta.transaction.Transactional;
+
 @Component
 public class UserProfileResource {
 
@@ -31,6 +33,7 @@ public class UserProfileResource {
      * 
      * @param userInfo
      */
+    @Transactional
     public void saveUserInfo(UserProfile userInfo) {
         userProfileRepository.save(this.convertToEntity(userInfo));
     }

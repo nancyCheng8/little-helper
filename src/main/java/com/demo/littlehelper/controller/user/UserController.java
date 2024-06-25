@@ -54,8 +54,8 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     
-    //** 登出接口 */
-    @PostMapping("/logout")
+    @ApiOperation("使用者登出")
+    @PostMapping(path = "/logout")
     public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
         userUsecase.logout(token);
         return ResponseEntity.ok().build();
